@@ -10,6 +10,8 @@ import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +41,7 @@ class SearchCutIssueTest {
     void call() {
         Issue.SearchResult result = new Issue.SearchResult();
         result.issues = singletonList(issue);
-        when(client.searchIssues("key = ISSUE-1", "summary,issuetype,status", 1 ,0))
+        when(client.searchIssues(eq("key = ISSUE-1"), anyString(), eq(1) ,eq(0)))
                 .thenReturn(result);
 
         SearchCutIssue task = new SearchCutIssue(client, "key = ISSUE-1", 1, 0);

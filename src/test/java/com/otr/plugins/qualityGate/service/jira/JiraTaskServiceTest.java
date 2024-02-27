@@ -82,6 +82,6 @@ class JiraTaskServiceTest {
         JiraTaskService jiraTaskService = new JiraTaskService(config, jiraClient, factory);
         assertNotNull(jiraTaskService.additionalEnrichment(Arrays.asList("BUg #1", "BUG #1")));
         assertEquals(1, jiraTaskService.additionalEnrichment(Arrays.asList("BUg #1", "BUG #1")).size());
-        assertTrue(jiraTaskService.additionalEnrichment(Arrays.asList("BUg #1", "BUG #1")).contains(new CutIssue("BUG #1", "bug", null)));
+        assertTrue(jiraTaskService.additionalEnrichment(Arrays.asList("BUg #1", "BUG #1")).contains(new CutIssue("BUG #1", "bug", null, null, null)));
     }
 }

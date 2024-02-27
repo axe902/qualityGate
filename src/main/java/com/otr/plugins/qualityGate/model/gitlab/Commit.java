@@ -10,7 +10,7 @@ import java.util.Map;
  * @param message commit body
  * @param created_at commit creation date
  */
-public record Commit(String id, String title, String message, Date created_at) {
+public record Commit(String id, String title, String message, Date created_at, String committer_name) {
 
     /**
      * Universal output format

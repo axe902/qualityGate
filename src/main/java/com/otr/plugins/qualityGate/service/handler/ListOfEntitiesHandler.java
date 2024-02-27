@@ -20,10 +20,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -95,19 +97,30 @@ public class ListOfEntitiesHandler implements Handler {
                     map.put("id", commit.id());
                     map.put("title", commit.title());
                     map.put("message", commit.message());
+                    map.put("committer_name", commit.committer_name());
 
                     Set<String> tasks = jiraTaskService.parseTicket(commit.message(), commit.title());
                     if (tasks.isEmpty()) {
                         // missing issue number in commit
                         errorDetails.add(map);
                     } else {
-                        Optional<String> opts = tasks.stream().filter(t -> additional.contains(new CutIssue(t, null, null))).findFirst();
+                        Set<CutIssue> cutIssueTasks = tasks.stream().map(task -> new CutIssue(task, null, null, null, null)).collect(Collectors.toSet());
+                        Optional<CutIssue> opts = additional.stream().filter(cutIssueTasks::contains).findFirst();
                         // missing
                         if (opts.isEmpty()) {
-                            map.put("issues", String.join(";", tasks));
-                            warnDetails.add(map);
+                            tasks.forEach(t -> {
+                                Map<String, String> warnMap = new HashMap<>(map);
+                                warnMap.put("issues", t);
+                                warnDetails.add(warnMap);
+                            });
                         } else {
-                            map.put("issues", opts.get());
+                            CutIssue issue = opts.get();
+                            map.put("issues", issue.key());
+                            map.put("key", issue.key());
+                            map.put("type", issue.type());
+                            map.put("status", issue.status());
+                            map.put("patch", StringUtils.join(issue.patch(), "\n"));
+                            map.put("source", issue.source());
                             details.add(map);
                         }
                     }

@@ -27,7 +27,8 @@ class CompareApiTest {
                 "1",
                 "issue-1",
                 "some message",
-                new Date())));
+                new Date(),
+                "user")));
 
         when(executor.execute(request, CompareResult.class)).thenReturn(compareResult);
         CompareApi compareApi = new CompareApi(executor);

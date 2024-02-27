@@ -18,7 +18,7 @@ import static com.otr.plugins.qualityGate.utils.FunUtils.CUT_ISSUE;
  * @param position start position
  */
 public record SearchCutIssue(JiraClient jiraClient, String jql, int batch, int position) implements Callable<List<CutIssue>> {
-    private static final String INCLUDE_FIELDS = "summary,issuetype,status";
+    private static final String INCLUDE_FIELDS = "summary,issuetype,status,customfield_28582,customfield_28588,customfield_28581";
 
     @Override
     public List<CutIssue> call() throws Exception {

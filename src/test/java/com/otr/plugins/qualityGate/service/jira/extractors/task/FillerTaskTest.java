@@ -11,6 +11,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,7 +44,7 @@ class FillerTaskTest {
         CONTENT.add(issues);
         Issue.SearchResult searchResult = new Issue.SearchResult();
         searchResult.issues = List.of(issue);
-        when(client.searchIssues("key in (,ISSUE-2,ISSUE-1)", "issuetype,status")).thenReturn(searchResult);
+        when(client.searchIssues(eq("key in (,ISSUE-2,ISSUE-1)"), anyString())).thenReturn(searchResult);
         FillerTask task = new FillerTask(client, CONTENT);
         task.call();
         assertEquals("close", CONTENT.get(0).get("status"));
@@ -53,7 +54,7 @@ class FillerTaskTest {
 
     @Test
     void callThrow() throws JiraException {
-        when(client.searchIssues("key in ()", "issuetype,status")).thenThrow(JiraException.class);
+        when(client.searchIssues(eq("key in ()"), anyString())).thenThrow(JiraException.class);
         FillerTask task = new FillerTask(client, CONTENT);
         task.call();
         assertEquals(0, CONTENT.size());

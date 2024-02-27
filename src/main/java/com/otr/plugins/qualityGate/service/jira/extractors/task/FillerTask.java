@@ -16,7 +16,7 @@ import static com.otr.plugins.qualityGate.utils.FunUtils.CUT_ISSUE;
 @Slf4j
 public record FillerTask(JiraClient client, List<Map<String, String>> list) implements Callable<Void> {
     private static final String JQL_SEARCH_ISSUE = "key in (:list)";
-    private static final String INCLUDE_FIELDS = "issuetype,status";
+    private static final String INCLUDE_FIELDS = "issuetype,status,customfield_28582,customfield_28588,customfield_28581";
     @Override
     public Void call() {
         Set<String> keys = new HashSet<>();

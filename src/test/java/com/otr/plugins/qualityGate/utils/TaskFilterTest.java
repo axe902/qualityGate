@@ -11,12 +11,12 @@ class TaskFilterTest {
     @Test
     void commitParserTest() {
         assertEquals(2, TaskFilter.parseCommit(new Commit(null,
-                "EXP-123", "Task by ticket SP-4107", null)).size());
+                "EXP-123", "Task by ticket SP-4107", null, "user")).size());
         assertEquals(1, TaskFilter.parseCommit(new Commit(null,
-                "Merge branch 'feature-EXP-255859' into 'master'", "some text about task", null))
+                "Merge branch 'feature-EXP-255859' into 'master'", "some text about task", null, "user"))
                 .size());
         assertEquals(1, TaskFilter.parseCommit(new Commit(null,
-                        "Merge branch 'feature-EXP-255859' into 'master'", "EXP-255859", null))
+                        "Merge branch 'feature-EXP-255859' into 'master'", "EXP-255859", null, "user"))
                 .size());
     }
 

@@ -108,8 +108,8 @@ class ChangeLogHandlerTest {
     void handleWithEmailError() throws HttpClientException, URISyntaxException {
         when(projectApi.loadProjectByName(anyString())).thenReturn(Optional.of(project));
         List<Commit> commits = Lists.newArrayList(
-                new Commit("sha-1", "TICKET-1", "DESCRIPTION", new Date()),
-                new Commit("sha-2", "ISSUE-1", "DESCRIPTION", new Date())
+                new Commit("sha-1", "TICKET-1", "DESCRIPTION", new Date(), "user"),
+                new Commit("sha-2", "ISSUE-1", "DESCRIPTION", new Date(), "user")
         );
         // check literal
         CompareResult compareResult = new CompareResult(commits);
